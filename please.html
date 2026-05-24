@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdul Fatah Portfolio</title>
+    
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- 1. KODE CSS (DARI FILE style.css) -->
+    <style>
+        :root {
+            --primary: #ffc0cb;
+            --dark: #050816;
+            --dark2: #0b1120;
+            --white: #ffffff;
+            --gray: #9ca3af;
+            --card: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--dark); 
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 20px;
+        }
+
+        /* NAVBAR */
+        header {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.25);
+            transition: 0.3s;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 15px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.4s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO */
+        .hero {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 8%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: var(--primary);
+            filter: blur(180px);
+            opacity: 0.15;
+            border-radius: 50%;
+            top: -250px;
+            right: -150px;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* PENTING: Style awal untuk Scroll Reveal (Digabungkan dari JS logic) */
+        .hero-text, .hero-image, .about-image, .about-text, .service-card, .skill, .contact-box {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        /* Class .show ditambahkan oleh JavaScript saat elemen terlihat */
+        .show {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        .hero-text h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .hero-text h1 {
+            font-size: 70px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 35px;
+            max-width: 550px;
+        }
+
+        .hero-btn {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 34px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.4s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: black;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 192, 203, 0.4);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: black;
+        }
+
+        /* HERO IMAGE */
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .circle {
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 192, 203, 0.3),
+                rgba(255, 255, 255, 0.05)
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .circle img {
+            width: 90%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* SECTION */
+        section {
+            padding: 100px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .section-title p {
+            color: var(--gray);
+        }
+
+        /* ABOUT */
+        .about-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 30px;
+        }
+
+        .about-text h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--gray);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        /* SERVICES */
+        .services {
+            background: var(--dark2);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--card);
+            padding: 40px 30px;
+            border-radius: 25px;
+            transition: 0.4s;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--primary);
+        }
+
+        .service-card i {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* SKILLS */
+        .skill {
+            margin-bottom: 30px;
+        }
+
+        .skill h4 {
+            margin-bottom: 12px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 12px;
+            background: #1e293b;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #8000
+            );
+            /* Perlu inline style width di HTML untuk melihat hasilnya */
+        }
+
+        /* CONTACT */
+        .contact-box {
+            text-align: center;
+        }
+
+        .contact-box p {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .social {
+            margin-top: 30px;
+        }
+
+        .social a {
+            width: 55px;
+            height: 55px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            transition: 0.4s;
+            font-size: 20px;
+        }
+
+        .social a:hover {
+            background: var(--primary);
+            color: black;
+            transform: translateY(-8px);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: black;
+            color: var(--gray);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero-text h1 {
+                font-size: 50px;
+            }
+            .circle {
+                width: 320px;
+                height: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav a {
+                margin: 0 10px;
+            }
+            .hero {
+                text-align: center;
+            }
+            .hero-btn {
+                justify-content: center;
+            }
+            .hero-text h1 {
+                font-size: 42px;
+            }
+            .section-title h2 {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Abdul Fatah</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-text">
+                <!-- ID typing digunakan oleh JS -->
+                <h3>Halo, saya <span id="typing"></span></h3>
+                <h1>Abdul <span>Fatah TKJ 2</span></h1>
+                <p>Siswa SMK PGRI Rangkasbitung. Aktif, kreatif, dan berorganisasi di OSIS.</p>
+                <div class="hero-btn">
+                    <a href="#contact" class="btn btn-primary">Hubungi Abdul</a>
+                    <a href="#about" class="btn btn-outline">Tentang Abdul</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="circle">
+                       <img src="https://files.catbox.moe/oa8u5y.jpg" alt="shinobu" width="290px" height="250px"> 
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="section-title">
+            <h2>Tentang <span>Abdul</span></h2>
+            <p>I Love Anime I Said I Love Anime</p>
+        </div>
+        <div class="about-container">
+            <div class="about-image">
+        <img src="https://files.catbox.moe/v6h4je.jpg" alt="shinobu" widht="700px" height="500px" alt="About">
+                <p>
+                  SAYA MENJALANI TUGAS SEBAGAI SEORANG PELAJAR
+                </p>
+                
+
+             
+        
+            <div class="about-text">
+                <h3>
+                    Seorang pelajar yang ingin memperbaiki masa depan
+                </h3>
+                <p>
+                    Saya adalah murid kelas 10 tkj 2 yang bersekolah di smk pgri, saya ingin memperbaiki diri saya terhadap perubahan, yang ada di pola pikir saya, berharap menjadi pelajar yang baik, bermoral, berakhlak mulia, tidak melawan orang tua maupun guru, saya akan memperbaiki diri saya karena terfikir masa depan.
+                </p>
+                <p>
+                    Saya tahu bagaimana cara menjadi pelajar yang baik, disiplin, aktif, kreatif di bidang apapun.
+                </p>
+                <a href="#" class="btn btn-primary">
+                    Download CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+        <div class="section-title">
+            <h2>Hobi <span>Saya</span></h2>
+            <p>Yang disukai</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <i class="fa-solid fa-gamepad"></i>
+                <h3>Bermain game</h3>
+                <p>
+                    Bermain game untuk menghabiskan waktu luang.
+                </p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-tv"></i>
+                <h3>Menonton anime</h3>
+                <p>
+                    ketika libur sekolah saya suka menonton anime, saya suka menamatkan berbagai anime agar mendapatkan visual/pemahaman.
+                </p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-laptop-code"></i>
+                <h3>belajar hal hal dasar</h3>
+                <p>
+                    Kadang semuanya itu diawali dari dasar, tidak harus susah, intinya kuasai dasar maka kita akan menguasai kelebihannya.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="section-title">
+            <h2>My <span>Skills</span></h2>
+            <p>Profesional pelajar</p>
+        </div>
+        
+        <div class="skill">
+            <h4>Belajar</h4>
+            <div class="progress">
+                <span style="width:75%"></span>
+            </div>
+        </div>
+        
+        <div class="skill">
+            <h4>Public Speaking</h4>
+            <div class="progress">
+                <span style="width:70%"></span>
+            </div>
+        </div>
+        
+        <div class="skill">
+            <h4>Popularity</h4>
+            <div class="progress">
+                <span style="width:99%"></span>
+            </div>
+        </div>
+        
+        <div class="skill">
+            <h4>Achievement</h4>
+            <div class="progress">
+                <span style="width:20%"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-title">
+            <h2>Contact <span>Me</span></h2>
+            <p>its so hard</p>
+        </div>
+        <div class="contact-box">
+            <p>Email : vivein563@gmail.com</p>
+            <p>Instagram : @abdlfthhxc</p>
+            <p>WhatsApp : 085888482475</p>
+            <div class="social">
+                <a href="https://www.instagram.com/abdlfthhxc?igsh=dGxtdnZkMXZiOThv">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://youtube.com/@vivein1?si=Q7fH-ZCRVzC2OI9B">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@abdlfthhxc?_r=1&_t=ZS-96aetzbqBGu">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://wa.me/qr/XUGHSLV6BSWCI1">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 ABDUL FATAH— Creative Portfolio
+    </footer>
+
+</body>
+</html>
+
+    <!-- 2. KODE JAVASCRIPT (DARI FILE script.js) -->
+    <script>
+        // 1. NAVBAR EFFECT
+        const header = document.querySelector("header");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 50) {
+                header.style.background = "#050816";
+                header.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
+            } else {
+                header.style.background = "rgba(0,0,0,0.25)";
+                header.style.boxShadow = "none";
+            }
+        });
+
+        // 2. TYPING EFFECT
+        const texts = [
+            "Abdul Fatah",
+            "Pelajar kreatif",
+            "Pelajar unggul",
+            "Kelas 10 tkj 2"
+        ];
+
+        let index = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById("typing");
+
+        if (typingElement) {
+            function typeEffect() {
+                const currentText = texts[index];
+                
+                if (isDeleting) {
+                    typingElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = 100;
+
+                if (isDeleting) {
+                    typeSpeed /= 2;
+                }
+
+                if (!isDeleting && charIndex === currentText.length) {
+                    typeSpeed = 1500;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    index++;
+                    if (index >= texts.length) {
+                        index = 0;
+                    }
+                    typeSpeed = 500;
+                }
+
+                setTimeout(typeEffect, typeSpeed);
+            }
+
+            document.addEventListener("DOMContentLoaded", typeEffect);
+        }
+
+        // 3. SCROLL REVEAL
+        const reveals = document.querySelectorAll(
+            ".hero-text, .hero-image, .about-image, .about-text, .service-card, .skill, .contact-box"
+        );
+
+        function revealOnScroll() {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            reveals.forEach((element) => {
+                const elementTop = element.getBoundingClientRect().top;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add("show");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+
+        // 4. PARALLAX EFFECT
+        window.addEventListener("scroll", () => {
+            const scrollValue = window.scrollY;
+            const heroImage = document.querySelector(".hero-image");
+            
+            if (heroImage) {
+                // Catatan: Ini mungkin menimpa animasi 'float' CSS saat discroll
+                heroImage.style.transform = `translateY(${scrollValue * 0.15}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
